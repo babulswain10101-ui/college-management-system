@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Student Result{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+<h2>Student Result Card</h2>
+
+</div>
+
+<div class="card-body">
+
+<p><strong>Student:</strong> {{ result.student }}</p>
+
+<p><strong>Course:</strong> {{ result.course }}</p>
+
+<p><strong>Semester:</strong> {{ result.semester }}</p>
+
+<p><strong>Total Marks:</strong> {{ result.total_marks }}</p>
+
+<p><strong>Obtained Marks:</strong> {{ result.obtained_marks }}</p>
+
+<p><strong>Percentage:</strong> {{ result.percentage }}%</p>
+
+<p><strong>Grade:</strong> {{ result.grade }}</p>
+
+<p><strong>Remarks:</strong> {{ result.remarks }}</p>
+
+<hr>
+
+<button onclick="window.print()" class="btn btn-primary">
+🖨 Print Result
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

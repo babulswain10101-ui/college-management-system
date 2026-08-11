@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Attendance{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card shadow border-danger">
+
+<div class="card-header bg-danger text-white">
+
+<h3>🗑 Delete Attendance</h3>
+
+</div>
+
+<div class="card-body text-center">
+
+<h4>Are you sure?</h4>
+
+<p>
+
+{{ attendance.student }}
+
+<br>
+
+{{ attendance.date }}
+
+</p>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<button class="btn btn-danger">
+
+Yes, Delete
+
+</button>
+
+<a href="{% url 'attendance_list' %}" class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Teacher Form{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow-lg">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h3>👨‍🏫 Teacher Form</h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form method="POST" enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label>First Name</label>
+                                {{ form.first_name }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Last Name</label>
+                                {{ form.last_name }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Email</label>
+                                {{ form.email }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Phone</label>
+                                {{ form.phone }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Gender</label>
+                                {{ form.gender }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Department</label>
+                                {{ form.department }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Qualification</label>
+                                {{ form.qualification }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Experience</label>
+                                {{ form.experience }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Joining Date</label>
+                                {{ form.joining_date }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Photo</label>
+                                {{ form.photo }}
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label>Address</label>
+                                {{ form.address }}
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            💾 Save Teacher
+                        </button>
+
+                        <a href="{% url 'teacher_list' %}" class="btn btn-secondary">
+                            Cancel
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

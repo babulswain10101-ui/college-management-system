@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Teacher Profile{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow-lg">
+
+                <div class="card-header bg-primary text-white">
+                    <h3>👨‍🏫 Teacher Profile</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-4 text-center">
+
+                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                                 class="img-fluid rounded-circle shadow"
+                                 width="180"
+                                 alt="Teacher">
+
+                        </div>
+
+                        <div class="col-md-8">
+
+                            <h3>
+                                {{ teacher.first_name }}
+                                {{ teacher.last_name }}
+                            </h3>
+
+                            <hr>
+
+                            <table class="table table-bordered">
+
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{ teacher.email }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Phone</th>
+                                    <td>{{ teacher.phone }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Gender</th>
+                                    <td>{{ teacher.gender }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Experience</th>
+                                    <td>{{ teacher.experience }}</td>
+                                </tr>
+
+                            </table>
+
+                            <a href="{% url 'teacher_edit' teacher.id %}"
+                               class="btn btn-warning">
+                                ✏ Edit
+                            </a>
+
+                            <a href="{% url 'teacher_delete' teacher.id %}"
+                               class="btn btn-danger">
+                                🗑 Delete
+                            </a>
+
+                            <a href="{% url 'teacher_list' %}"
+                               class="btn btn-secondary">
+                                ⬅ Back
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

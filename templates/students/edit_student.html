@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-warning text-dark">
+            <h3>Edit Student</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-success">
+                    Update Student
+                </button>
+
+                <a href="{% url 'student_list' %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

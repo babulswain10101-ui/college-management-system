@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="d-flex justify-content-between mb-3">
+
+<h2>📚 Course Management</h2>
+
+<a href="{% url 'course_add' %}" class="btn btn-success">
+➕ Add Course
+</a>
+
+</div>
+
+<form method="GET" class="mb-3">
+
+<div class="input-group">
+
+<input type="text"
+name="search"
+value="{{ search }}"
+class="form-control"
+placeholder="Search Course">
+
+<button class="btn btn-primary">
+🔍 Search
+</button>
+
+</div>
+
+</form>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-bordered table-hover">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>ID</th>
+<th>Course</th>
+<th>Code</th>
+<th>Department</th>
+<th>Duration</th>
+<th>Fees</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for course in courses %}
+
+<tr>
+
+<td>{{ course.id }}</td>
+
+<td>{{ course.course_name }}</td>
+
+<td>{{ course.course_code }}</td>
+
+<td>{{ course.department }}</td>
+
+<td>{{ course.duration }}</td>
+
+<td>₹ {{ course.fees }}</td>
+
+<td>
+
+<a href="{% url 'course_edit' course.id %}"
+class="btn btn-warning btn-sm">
+
+Edit
+
+</a>
+
+<a href="{% url 'course_delete' course.id %}"
+class="btn btn-danger btn-sm">
+
+Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="7" class="text-center">
+
+No Courses Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+<nav>
+
+<ul class="pagination justify-content-center">
+
+{% if courses.has_previous %}
+
+<li class="page-item">
+
+<a class="page-link"
+href="?page={{ courses.previous_page_number }}">
+
+Previous
+
+</a>
+
+</li>
+
+{% endif %}
+
+<li class="page-item active">
+
+<span class="page-link">
+
+{{ courses.number }}
+
+</span>
+
+</li>
+
+{% if courses.has_next %}
+
+<li class="page-item">
+
+<a class="page-link"
+href="?page={{ courses.next_page_number }}">
+
+Next
+
+</a>
+
+</li>
+
+{% endif %}
+
+</ul>
+
+</nav>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

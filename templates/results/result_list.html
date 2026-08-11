@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Results{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="d-flex justify-content-between mb-3">
+
+<h2>📄 Result Management</h2>
+
+<a href="{% url 'result_add' %}" class="btn btn-success">
+➕ Add Result
+</a>
+
+</div>
+
+<form method="GET" class="mb-3">
+
+<div class="input-group">
+
+<input type="text"
+name="search"
+value="{{ search }}"
+class="form-control"
+placeholder="Search Student">
+
+<button class="btn btn-primary">
+🔍 Search
+</button>
+
+</div>
+
+</form>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-bordered table-hover">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Student</th>
+<th>Course</th>
+<th>Semester</th>
+<th>Marks</th>
+<th>%</th>
+<th>Grade</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for result in results %}
+
+<tr>
+
+<td>{{ result.student }}</td>
+<td>{{ result.course }}</td>
+<td>{{ result.semester }}</td>
+<td>{{ result.obtained_marks }}/{{ result.total_marks }}</td>
+<td>{{ result.percentage }}%</td>
+<td>{{ result.grade }}</td>
+
+<td>
+
+<a href="{% url 'result_detail' result.id %}" class="btn btn-info btn-sm">
+View
+</a>
+
+<a href="{% url 'result_edit' result.id %}" class="btn btn-warning btn-sm">
+Edit
+</a>
+
+<a href="{% url 'result_delete' result.id %}" class="btn btn-danger btn-sm">
+Delete
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="7" class="text-center">
+
+No Results Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,1102 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | College Management System{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.dashboard-wrapper{
+    animation: pageFade .7s ease;
+}
+
+@keyframes pageFade{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.dashboard-sidebar{
+    min-height:calc(100vh - 80px);
+    border-radius:18px;
+    background:linear-gradient(180deg,#111827,#1f2937);
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+    padding:20px 12px;
+}
+
+.sidebar-logo{
+    text-align:center;
+    color:white;
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+.sidebar-logo span{
+    color:#60a5fa;
+}
+
+.sidebar-link{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#d1d5db;
+    text-decoration:none;
+    padding:12px 15px;
+    margin:6px 0;
+    border-radius:10px;
+    transition:.3s;
+    font-weight:500;
+}
+
+.sidebar-link:hover{
+    color:white;
+    background:rgba(255,255,255,.1);
+    transform:translateX(5px);
+}
+
+.sidebar-link.active{
+    color:white;
+    background:linear-gradient(90deg,#2563eb,#3b82f6);
+    box-shadow:0 5px 15px rgba(37,99,235,.3);
+}
+
+
+/* =========================
+   TOP HEADER
+========================= */
+
+.dashboard-header{
+    background:white;
+    border-radius:16px;
+    padding:18px 22px;
+    margin-bottom:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.dashboard-title{
+    font-weight:700;
+    margin:0;
+    color:#111827;
+}
+
+.welcome-badge{
+    padding:9px 15px;
+    border-radius:30px;
+    background:#eff6ff;
+    color:#2563eb;
+    font-weight:600;
+}
+
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stat-card{
+    border:0;
+    border-radius:18px;
+    overflow:hidden;
+    position:relative;
+    transition:.35s;
+    animation:cardUp .7s ease;
+}
+
+@keyframes cardUp{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.stat-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 30px rgba(0,0,0,.15)!important;
+}
+
+.stat-card::after{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+    right:-30px;
+    top:-30px;
+}
+
+.stat-icon{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.stat-number{
+    font-size:32px;
+    font-weight:800;
+}
+
+
+/* =========================
+   COMMON CARD
+========================= */
+
+.dashboard-card{
+    border:0;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    overflow:hidden;
+}
+
+.dashboard-card .card-header{
+    border:0;
+    padding:16px 20px;
+    font-weight:600;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table{
+    margin-bottom:0;
+}
+
+.table thead th{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+}
+
+.table tbody tr{
+    transition:.25s;
+}
+
+.table tbody tr:hover{
+    background:#f8fafc;
+    transform:scale(1.005);
+}
+
+
+/* =========================
+   NOTIFICATION
+========================= */
+
+.notification-item{
+    border:0;
+    border-bottom:1px solid #eee;
+    padding:14px;
+    transition:.25s;
+}
+
+.notification-item:hover{
+    background:#f8fafc;
+    padding-left:20px;
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-card{
+    text-align:center;
+}
+
+.profile-image{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:50%;
+    border:4px solid #e5e7eb;
+    padding:3px;
+    transition:.3s;
+}
+
+.profile-image:hover{
+    transform:scale(1.08);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:991px){
+
+    .dashboard-sidebar{
+        min-height:auto;
+        margin-bottom:20px;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .dashboard-header{
+        text-align:center;
+    }
+
+    .welcome-badge{
+        display:inline-block;
+        margin-top:10px;
+    }
+
+    .stat-number{
+        font-size:27px;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid dashboard-wrapper py-3">
+
+    <div class="row g-4">
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+        <div class="col-lg-2">
+
+            <div class="dashboard-sidebar">
+
+                <div class="sidebar-logo">
+                    🎓 <span>CMS</span>
+                </div>
+
+                <a href="{% url 'dashboard' %}"
+                   class="sidebar-link active">
+                    🏠
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="{% url 'student_list' %}"
+                   class="sidebar-link">
+                    👨‍🎓
+                    <span>Students</span>
+                </a>
+
+                <a href="{% url 'teacher_list' %}"
+                   class="sidebar-link">
+                    👨‍🏫
+                    <span>Teachers</span>
+                </a>
+
+                <a href="/departments/"
+                   class="sidebar-link">
+                    🏢
+                    <span>Departments</span>
+                </a>
+
+                <a href="/courses/"
+                   class="sidebar-link">
+                    📚
+                    <span>Courses</span>
+                </a>
+
+                <a href="/attendance/"
+                   class="sidebar-link">
+                    📅
+                    <span>Attendance</span>
+                </a>
+
+                <a href="/fees/"
+                   class="sidebar-link">
+                    💰
+                    <span>Fees</span>
+                </a>
+
+                <a href="/results/"
+                   class="sidebar-link">
+                    📄
+                    <span>Results</span>
+                </a>
+
+                <hr class="border-secondary">
+
+                <a href="{% url 'profile' %}"
+                   class="sidebar-link">
+                    👤
+                    <span>Profile</span>
+                </a>
+
+                <a href="{% url 'logout' %}"
+                   class="sidebar-link text-danger">
+                    🚪
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+
+        <div class="col-lg-10">
+
+            <!-- Header -->
+
+            <div class="dashboard-header
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                        flex-wrap">
+
+                <div>
+
+                    <p class="text-muted mb-1">
+                        College Management System
+                    </p>
+
+                    <h2 class="dashboard-title">
+                        Dashboard
+                    </h2>
+
+                </div>
+
+                <div class="welcome-badge">
+
+                    👋 Welcome,
+                    {{ request.user.username }}
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 STATISTICS
+            ========================== -->
+
+            <div class="row g-4 mb-4">
+
+
+                <!-- Students -->
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="card stat-card
+                                bg-primary
+                                text-white
+                                shadow">
+
+                        <div class="card-body">
+
+                            <div class="stat-icon">
+                                👨‍🎓
+                            </div>
+
+                            <p class="mb-1">
+                                Total Students
+                            </p>
+
+                            <div class="stat-number">
+                                {{ total_students }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Teachers -->
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="card stat-card
+                                bg-success
+                                text-white
+                                shadow">
+
+                        <div class="card-body">
+
+                            <div class="stat-icon">
+                                👨‍🏫
+                            </div>
+
+                            <p class="mb-1">
+                                Total Teachers
+                            </p>
+
+                            <div class="stat-number">
+                                {{ total_teachers }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Departments -->
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="card stat-card
+                                bg-warning
+                                shadow">
+
+                        <div class="card-body">
+
+                            <div class="stat-icon">
+                                🏢
+                            </div>
+
+                            <p class="mb-1">
+                                Total Departments
+                            </p>
+
+                            <div class="stat-number">
+                                {{ total_departments }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Courses -->
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="card stat-card
+                                bg-danger
+                                text-white
+                                shadow">
+
+                        <div class="card-body">
+
+                            <div class="stat-icon">
+                                📚
+                            </div>
+
+                            <p class="mb-1">
+                                Total Courses
+                            </p>
+
+                            <div class="stat-number">
+                                {{ total_courses }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 CHART + QUICK STATS
+            ========================== -->
+
+            <div class="row g-4 mb-4">
+
+
+                <!-- Chart -->
+
+                <div class="col-lg-8">
+
+                    <div class="card dashboard-card">
+
+                        <div class="card-header
+                                    bg-primary
+                                    text-white">
+
+                            📊 College Statistics
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <canvas id="collegeChart"
+                                    height="120">
+                            </canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Quick Statistics -->
+
+                <div class="col-lg-4">
+
+                    <div class="card dashboard-card">
+
+                        <div class="card-header
+                                    bg-success
+                                    text-white">
+
+                            ⚡ Quick Statistics
+
+                        </div>
+
+                        <div class="card-body">
+
+
+                            <div class="d-flex
+                                        justify-content-between
+                                        mb-3">
+
+                                <span>
+                                    👨‍🎓 Students
+                                </span>
+
+                                <strong>
+                                    {{ total_students }}
+                                </strong>
+
+                            </div>
+
+                            <hr>
+
+
+                            <div class="d-flex
+                                        justify-content-between
+                                        mb-3">
+
+                                <span>
+                                    👨‍🏫 Teachers
+                                </span>
+
+                                <strong>
+                                    {{ total_teachers }}
+                                </strong>
+
+                            </div>
+
+                            <hr>
+
+
+                            <div class="d-flex
+                                        justify-content-between
+                                        mb-3">
+
+                                <span>
+                                    🏢 Departments
+                                </span>
+
+                                <strong>
+                                    {{ total_departments }}
+                                </strong>
+
+                            </div>
+
+                            <hr>
+
+
+                            <div class="d-flex
+                                        justify-content-between">
+
+                                <span>
+                                    📚 Courses
+                                </span>
+
+                                <strong>
+                                    {{ total_courses }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 RECENT STUDENTS
+            ========================== -->
+
+            <div class="card dashboard-card mb-4">
+
+                <div class="card-header
+                            bg-dark
+                            text-white
+                            d-flex
+                            justify-content-between">
+
+                    <span>
+                        👨‍🎓 Recent Students
+                    </span>
+
+                    <a href="{% url 'student_list' %}"
+                       class="btn btn-light btn-sm">
+
+                        View All
+
+                    </a>
+
+                </div>
+
+
+                <div class="card-body p-0">
+
+                    <div class="table-responsive">
+
+                        <table class="table
+                                      table-hover
+                                      align-middle">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>ID</th>
+
+                                    <th>Name</th>
+
+                                    <th>Roll No</th>
+
+                                    <th>Department</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                            {% for student in recent_students %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ student.id }}
+                                    </td>
+
+                                    <td>
+
+                                        <strong>
+                                            {{ student.first_name }}
+                                            {{ student.last_name }}
+                                        </strong>
+
+                                    </td>
+
+                                    <td>
+                                        {{ student.roll_no }}
+                                    </td>
+
+                                    <td>
+                                        {{ student.department }}
+                                    </td>
+
+                                </tr>
+
+                            {% empty %}
+
+                                <tr>
+
+                                    <td colspan="4"
+                                        class="text-center py-4">
+
+                                        No Students Available
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 RECENT TEACHERS
+            ========================== -->
+
+            <div class="card dashboard-card mb-4">
+
+                <div class="card-header
+                            bg-success
+                            text-white
+                            d-flex
+                            justify-content-between">
+
+                    <span>
+                        👨‍🏫 Recent Teachers
+                    </span>
+
+                    <a href="/teachers/"
+                       class="btn btn-light btn-sm">
+
+                        View All
+
+                    </a>
+
+                </div>
+
+
+                <div class="card-body p-0">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>ID</th>
+
+                                    <th>Name</th>
+
+                                    <th>Department</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                            {% for teacher in recent_teachers %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ teacher.id }}
+                                    </td>
+
+                                    <td>
+                                        {{ teacher }}
+                                    </td>
+
+                                    <td>
+                                        {{ teacher.department }}
+                                    </td>
+
+                                </tr>
+
+                            {% empty %}
+
+                                <tr>
+
+                                    <td colspan="3"
+                                        class="text-center py-4">
+
+                                        No Teachers Available
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 NOTIFICATIONS + PROFILE
+            ========================== -->
+
+            <div class="row g-4">
+
+
+                <!-- Notifications -->
+
+                <div class="col-lg-7">
+
+                    <div class="card dashboard-card">
+
+                        <div class="card-header
+                                    bg-warning">
+
+                            🔔 Notifications
+
+                        </div>
+
+
+                        <div class="card-body p-0">
+
+
+                            <div class="notification-item">
+
+                                <strong>
+                                    ✅ Student Registration
+                                </strong>
+
+                                <br>
+
+                                <small class="text-muted">
+                                    Student registration is available.
+                                </small>
+
+                            </div>
+
+
+                            <div class="notification-item">
+
+                                <strong>
+                                    📅 Attendance
+                                </strong>
+
+                                <br>
+
+                                <small class="text-muted">
+                                    Attendance management is active.
+                                </small>
+
+                            </div>
+
+
+                            <div class="notification-item">
+
+                                <strong>
+                                    💰 Fees
+                                </strong>
+
+                                <br>
+
+                                <small class="text-muted">
+                                    Fee collection module is active.
+                                </small>
+
+                            </div>
+
+
+                            <div class="notification-item">
+
+                                <strong>
+                                    📄 Results
+                                </strong>
+
+                                <br>
+
+                                <small class="text-muted">
+                                    Result management is available.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Profile -->
+
+                <div class="col-lg-5">
+
+                    <div class="card dashboard-card profile-card">
+
+                        <div class="card-header
+                                    bg-info
+                                    text-white">
+
+                            👤 Admin Profile
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                                class="profile-image mb-3"
+                                alt="Profile">
+
+
+                            <h5>
+                                {{ request.user.username }}
+                            </h5>
+
+
+                            <p class="text-muted">
+
+                                {{ request.user.email }}
+
+                            </p>
+
+
+                            <a href="{% url 'profile' %}"
+                               class="btn btn-primary">
+
+                                View Profile
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 FOOTER
+            ========================== -->
+
+            <footer class="text-center
+                           text-muted
+                           py-4">
+
+                <small>
+
+                    © 2026 College Management System
+                    <br>
+
+                    Developed with Django & Bootstrap 5
+
+                </small>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const chartElement =
+    document.getElementById("collegeChart");
+
+if(chartElement){
+
+    new Chart(chartElement, {
+
+        type: "bar",
+
+        data: {
+
+            labels: [
+                "Students",
+                "Teachers",
+                "Departments",
+                "Courses"
+            ],
+
+            datasets: [{
+
+                label: "College Statistics",
+
+                data: [
+                    {{ total_students|default:0 }},
+                    {{ total_teachers|default:0 }},
+                    {{ total_departments|default:0 }},
+                    {{ total_courses|default:0 }}
+                ],
+
+                borderWidth: 1,
+
+                borderRadius: 8
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            animation: {
+
+                duration: 1500
+
+            },
+
+            plugins: {
+
+                legend: {
+
+                    display: true
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        precision: 0
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

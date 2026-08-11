@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% block title %}Fee Form{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7">
+
+            <div class="card shadow-lg border-0">
+
+                <!-- HEADER -->
+
+                <div class="card-header bg-success text-white">
+
+                    <h3 class="mb-0">
+                        💰 Fee Form
+                    </h3>
+
+                </div>
+
+
+                <!-- BODY -->
+
+                <div class="card-body">
+
+                    <!-- Messages -->
+
+                    {% if messages %}
+
+                        {% for message in messages %}
+
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+
+                    <!-- General Errors -->
+
+                    {% if form.non_field_errors %}
+
+                        <div class="alert alert-danger">
+
+                            {{ form.non_field_errors }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+
+                        <!-- ========================= -->
+                        <!-- STUDENT -->
+                        <!-- ========================= -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+
+                                👨‍🎓 Student
+
+                            </label>
+
+
+                            <div class="input-group">
+
+                                {{ form.student }}
+
+                                <a
+                                    href="{% url 'add_student' %}"
+                                    class="btn btn-primary"
+                                >
+
+                                    ➕ Add Student
+
+                                </a>
+
+                            </div>
+
+
+                            {% if form.student.errors %}
+
+                                <div class="text-danger mt-1">
+
+                                    {{ form.student.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <small class="text-muted">
+
+                                Existing student ko select karein.
+                                Student nahi hai to "Add Student" par click karein.
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- ========================= -->
+                        <!-- AMOUNT -->
+                        <!-- ========================= -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+
+                                💵 Amount
+
+                            </label>
+
+                            {{ form.amount }}
+
+                            {% if form.amount.errors %}
+
+                                <div class="text-danger">
+
+                                    {{ form.amount.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ========================= -->
+                        <!-- PAYMENT DATE -->
+                        <!-- ========================= -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+
+                                📅 Payment Date
+
+                            </label>
+
+                            {{ form.payment_date }}
+
+                            {% if form.payment_date.errors %}
+
+                                <div class="text-danger">
+
+                                    {{ form.payment_date.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ========================= -->
+                        <!-- PAYMENT METHOD -->
+                        <!-- ========================= -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+
+                                💳 Payment Method
+
+                            </label>
+
+                            {{ form.payment_method }}
+
+                            {% if form.payment_method.errors %}
+
+                                <div class="text-danger">
+
+                                    {{ form.payment_method.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ========================= -->
+                        <!-- STATUS -->
+                        <!-- ========================= -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+
+                                📊 Status
+
+                            </label>
+
+                            {{ form.status }}
+
+                            {% if form.status.errors %}
+
+                                <div class="text-danger">
+
+                                    {{ form.status.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ========================= -->
+                        <!-- RECEIPT NUMBER -->
+                        <!-- ========================= -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+
+                                🧾 Receipt Number
+
+                            </label>
+
+                            {{ form.receipt_number }}
+
+                            {% if form.receipt_number.errors %}
+
+                                <div class="text-danger">
+
+                                    {{ form.receipt_number.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- ========================= -->
+                        <!-- REMARKS -->
+                        <!-- ========================= -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-bold">
+
+                                📝 Remarks
+
+                            </label>
+
+                            {{ form.remarks }}
+
+                            {% if form.remarks.errors %}
+
+                                <div class="text-danger">
+
+                                    {{ form.remarks.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex gap-2">
+
+                            <button
+                                type="submit"
+                                class="btn btn-success"
+                            >
+
+                                💾 Save Fee
+
+                            </button>
+
+
+                            <a
+                                href="{% url 'fee_list' %}"
+                                class="btn btn-secondary"
+                            >
+
+                                ⬅ Back
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- SEARCHABLE STUDENT -->
+<!-- ========================= -->
+
+<link
+    href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css"
+    rel="stylesheet"
+>
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    new TomSelect("#id_student", {
+
+        create: false,
+
+        maxItems: 1,
+
+        placeholder: "Type student name to search...",
+
+        searchField: [
+            "text"
+        ],
+
+        sortField: {
+            field: "text",
+            direction: "asc"
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

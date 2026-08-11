@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .profile-container {
+        max-width: 850px;
+        margin: 40px auto;
+    }
+
+    .profile-card {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+        animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    }
+
+    .profile-header {
+        background: linear-gradient(
+            135deg,
+            #0d6efd,
+            #6610f2
+        );
+
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .profile-avatar {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-size: 55px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+
+    .profile-header h2 {
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .profile-header p {
+        margin-top: 5px;
+        opacity: 0.9;
+    }
+
+    .information-title {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .info-box {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 15px;
+        padding: 18px;
+        margin-bottom: 15px;
+        transition: 0.3s;
+    }
+
+    .info-box:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .info-label {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+
+    .info-value {
+        font-size: 17px;
+        font-weight: 600;
+        color: #212529;
+        word-break: break-word;
+    }
+
+    .profile-actions {
+        margin-top: 25px;
+    }
+
+</style>
+
+
+<div class="container profile-container">
+
+    <div class="card profile-card">
+
+        <!-- ========================= -->
+        <!-- PROFILE HEADER -->
+        <!-- ========================= -->
+
+        <div class="profile-header">
+
+            <div class="profile-avatar">
+                👤
+            </div>
+
+            <h2>{{ full_name }}</h2>
+
+            <p>
+                @{{ user.username }}
+            </p>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- PROFILE BODY -->
+        <!-- ========================= -->
+
+        <div class="card-body p-4">
+
+            <div class="information-title">
+                👤 Personal Information
+            </div>
+
+
+            <div class="row">
+
+
+                <!-- NAME -->
+
+                <div class="col-md-6">
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            👤 Name
+                        </div>
+
+                        <div class="info-value">
+                            {{ full_name }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- USERNAME -->
+
+                <div class="col-md-6">
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            🔐 Username
+                        </div>
+
+                        <div class="info-value">
+                            {{ user.username }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="col-md-6">
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            📧 Email
+                        </div>
+
+                        <div class="info-value">
+                            {{ user.email|default:"Not provided" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACCOUNT CREATED -->
+
+                <div class="col-md-6">
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            📅 Account Created
+                        </div>
+
+                        <div class="info-value">
+
+                            {{ user.date_joined|date:"d M Y" }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LAST LOGIN -->
+
+                <div class="col-md-6">
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            🕐 Last Login
+                        </div>
+
+                        <div class="info-value">
+
+                            {% if user.last_login %}
+
+                                {{ user.last_login|date:"d M Y, h:i A" }}
+
+                            {% else %}
+
+                                Never
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACCOUNT STATUS -->
+
+                <div class="col-md-6">
+
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            ✅ Account Status
+                        </div>
+
+                        <div class="info-value">
+
+                            {% if user.is_active %}
+
+                                <span class="badge bg-success">
+                                    Active
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-danger">
+                                    Inactive
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- BUTTONS -->
+            <!-- ========================= -->
+
+            <div class="profile-actions">
+
+                <div class="row g-2">
+
+
+                    <div class="col-md-6">
+
+                        <a
+                            href="{% url 'change_password' %}"
+                            class="btn btn-warning w-100">
+
+                            🔑 Change Password
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <a
+                            href="{% url 'logout' %}"
+                            class="btn btn-danger w-100">
+
+                            🚪 Logout
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

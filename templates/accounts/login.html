@@ -1,0 +1,442 @@
+{% extends "base.html" %}
+
+{% block title %}Login | College Management{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .auth-wrapper {
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 15px;
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 1000px;
+        min-height: 560px;
+        background: rgba(255, 255, 255, 0.96);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 25px 70px rgba(0,0,0,0.15);
+        display: flex;
+        animation: cardEnter 0.8s ease;
+    }
+
+    /* LEFT SIDE */
+
+    .auth-left {
+        width: 45%;
+        padding: 50px;
+        color: white;
+        background: linear-gradient(
+            135deg,
+            #0d6efd,
+            #4f46e5,
+            #7c3aed
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .auth-left::before,
+    .auth-left::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.08);
+        animation: floating 6s infinite ease-in-out;
+    }
+
+    .auth-left::before {
+        width: 260px;
+        height: 260px;
+        top: -80px;
+        right: -80px;
+    }
+
+    .auth-left::after {
+        width: 180px;
+        height: 180px;
+        bottom: -60px;
+        left: -50px;
+        animation-delay: 2s;
+    }
+
+    .brand-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        margin-bottom: 25px;
+        backdrop-filter: blur(10px);
+    }
+
+    .auth-left h1 {
+        font-weight: 700;
+        font-size: 38px;
+        margin-bottom: 15px;
+    }
+
+    .auth-left p {
+        font-size: 16px;
+        line-height: 1.7;
+        opacity: 0.9;
+    }
+
+    .feature {
+        margin-top: 30px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 14px;
+        font-size: 14px;
+    }
+
+    .feature-item span {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+    }
+
+
+    /* RIGHT SIDE */
+
+    .auth-right {
+        width: 55%;
+        padding: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-box {
+        width: 100%;
+        max-width: 420px;
+        animation: slideRight 0.8s ease;
+    }
+
+    .login-box h2 {
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+
+    .login-subtitle {
+        color: #6b7280;
+        margin-bottom: 30px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .form-control {
+        height: 52px;
+        border-radius: 12px;
+        border: 1px solid #dbe1ea;
+        padding-left: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 4px rgba(79,70,229,0.10);
+        transform: translateY(-1px);
+    }
+
+    .login-btn {
+        height: 52px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg,#0d6efd,#4f46e5);
+        color: white;
+        font-weight: 600;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(79,70,229,0.3);
+    }
+
+    .auth-link {
+        text-decoration: none;
+        font-weight: 600;
+        color: #4f46e5;
+    }
+
+    .auth-link:hover {
+        text-decoration: underline;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 25px 0;
+        color: #9ca3af;
+        font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        height: 1px;
+        background: #e5e7eb;
+        flex: 1;
+    }
+
+    @keyframes cardEnter {
+        from {
+            opacity: 0;
+            transform: translateY(35px) scale(0.97);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @keyframes slideRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes floating {
+        0%,100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(20px);
+        }
+    }
+
+    @media (max-width: 768px) {
+
+        .auth-card {
+            flex-direction: column;
+        }
+
+        .auth-left,
+        .auth-right {
+            width: 100%;
+        }
+
+        .auth-left {
+            padding: 35px;
+            min-height: 300px;
+        }
+
+        .auth-left h1 {
+            font-size: 30px;
+        }
+
+        .feature {
+            display: none;
+        }
+
+        .auth-right {
+            padding: 35px 25px;
+        }
+    }
+
+</style>
+
+
+<div class="auth-wrapper">
+
+    <div class="auth-card">
+
+        <!-- LEFT -->
+
+        <div class="auth-left">
+
+            <div class="brand-icon">
+                🎓
+            </div>
+
+            <h1>Welcome Back</h1>
+
+            <p>
+                Login to your College Management System
+                and manage your academic activities from
+                one secure platform.
+            </p>
+
+            <div class="feature">
+
+                <div class="feature-item">
+                    <span>✓</span>
+                    Student Management
+                </div>
+
+                <div class="feature-item">
+                    <span>✓</span>
+                    Teacher Management
+                </div>
+
+                <div class="feature-item">
+                    <span>✓</span>
+                    Attendance & Results
+                </div>
+
+                <div class="feature-item">
+                    <span>✓</span>
+                    Fees Management
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div class="auth-right">
+
+            <div class="login-box">
+
+                <h2>Sign in</h2>
+
+                <p class="login-subtitle">
+                    Enter your credentials to continue.
+                </p>
+
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <div class="alert alert-{{ message.tags|default:'info' }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+
+                {% if form.non_field_errors %}
+
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+
+                {% endif %}
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Username
+                        </label>
+
+                        {{ form.username }}
+
+                        {% if form.username.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Password
+                        </label>
+
+                        {{ form.password }}
+
+                        {% if form.password.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ form.password.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="text-end mb-4">
+
+                        <a href="{% url 'forgot_password' %}"
+                           class="auth-link small">
+
+                            Forgot password?
+
+                        </a>
+
+                    </div>
+
+
+                    <button type="submit" class="login-btn">
+
+                        🔐 Sign In
+
+                    </button>
+
+                </form>
+
+
+                <div class="divider">
+                    OR
+                </div>
+
+
+                <div class="text-center">
+
+                    <span class="text-muted">
+                        Don't have an account?
+                    </span>
+
+                    <a href="{% url 'register' %}"
+                       class="auth-link">
+
+                        Create account
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

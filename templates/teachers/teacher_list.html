@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}Teachers{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>👨‍🏫 Teacher Management</h2>
+
+        <a href="{% url 'teacher_add' %}" class="btn btn-success">
+            ➕ Add Teacher
+        </a>
+
+    </div>
+
+    <!-- Search -->
+
+    <form method="GET" class="mb-3">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                class="form-control"
+                placeholder="Search Teacher">
+
+            <button class="btn btn-primary">
+                🔍 Search
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- Messages -->
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="alert alert-success">
+
+                {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+    <!-- Table -->
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Department</th>
+                        <th>Experience</th>
+                        <th width="170">Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for teacher in teachers %}
+
+                    <tr>
+
+                        <td>
+
+                            {% if teacher.photo %}
+
+                                <img src="{{ teacher.photo.url }}"
+                                     width="50"
+                                     height="50"
+                                     class="rounded-circle">
+
+                            {% else %}
+
+                                No Photo
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {{ teacher.first_name }}
+                            {{ teacher.last_name }}
+
+                        </td>
+
+                        <td>{{ teacher.email }}</td>
+
+                        <td>{{ teacher.phone }}</td>
+
+                        <td>{{ teacher.department }}</td>
+
+                        <td>{{ teacher.experience }} Years</td>
+
+                        <td>
+
+                            <a href="{% url 'teacher_edit' teacher.id %}"
+                               class="btn btn-warning btn-sm">
+
+                                Edit
+
+                            </a>
+
+                            <a href="{% url 'teacher_delete' teacher.id %}"
+                               class="btn btn-danger btn-sm">
+
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="7" class="text-center">
+
+                            No Teachers Found
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <!-- Pagination -->
+
+            <nav>
+
+                <ul class="pagination justify-content-center">
+
+                    {% if teachers.has_previous %}
+
+                        <li class="page-item">
+
+                            <a class="page-link"
+                               href="?page={{ teachers.previous_page_number }}">
+
+                                Previous
+
+                            </a>
+
+                        </li>
+
+                    {% endif %}
+
+                    <li class="page-item active">
+
+                        <span class="page-link">
+
+                            {{ teachers.number }}
+
+                        </span>
+
+                    </li>
+
+                    {% if teachers.has_next %}
+
+                        <li class="page-item">
+
+                            <a class="page-link"
+                               href="?page={{ teachers.next_page_number }}">
+
+                                Next
+
+                            </a>
+
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
