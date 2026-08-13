@@ -2,29 +2,257 @@
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
 
-    <div class="card shadow-lg">
+    <div class="card shadow-lg border-0">
 
-        <div class="card-header bg-warning text-dark">
-            <h3>Edit Student</h3>
+        <!-- Header -->
+        <div class="card-header bg-warning text-dark py-3">
+            <h3 class="mb-0">
+                <i class="bi bi-pencil-square"></i>
+                Edit Student
+            </h3>
         </div>
 
-        <div class="card-body">
+        <div class="card-body p-4">
 
-            <form method="POST">
+            <form method="POST"
+                  enctype="multipart/form-data">
 
                 {% csrf_token %}
 
-                {{ form.as_p }}
+                <!-- Student Information -->
 
-                <button type="submit" class="btn btn-success">
-                    Update Student
-                </button>
+                <div class="row">
 
-                <a href="{% url 'student_list' %}" class="btn btn-secondary">
-                    Cancel
-                </a>
+                    <!-- First Name -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            First Name
+                        </label>
+
+                        {{ form.first_name }}
+
+                        {% if form.first_name.errors %}
+                            <div class="text-danger small">
+                                {{ form.first_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Last Name -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Last Name
+                        </label>
+
+                        {{ form.last_name }}
+
+                        {% if form.last_name.errors %}
+                            <div class="text-danger small">
+                                {{ form.last_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Roll Number -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Roll Number
+                        </label>
+
+                        {{ form.roll_no }}
+
+                        {% if form.roll_no.errors %}
+                            <div class="text-danger small">
+                                {{ form.roll_no.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Email
+                        </label>
+
+                        {{ form.email }}
+
+                        {% if form.email.errors %}
+                            <div class="text-danger small">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Phone -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Phone Number
+                        </label>
+
+                        {{ form.phone }}
+
+                        {% if form.phone.errors %}
+                            <div class="text-danger small">
+                                {{ form.phone.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Gender -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Gender
+                        </label>
+
+                        {{ form.gender }}
+
+                        {% if form.gender.errors %}
+                            <div class="text-danger small">
+                                {{ form.gender.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Department -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Department
+                        </label>
+
+                        {{ form.department }}
+
+                        {% if form.department.errors %}
+                            <div class="text-danger small">
+                                {{ form.department.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Course -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Course
+                        </label>
+
+                        {{ form.course }}
+
+                        {% if form.course.errors %}
+                            <div class="text-danger small">
+                                {{ form.course.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Year -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Year
+                        </label>
+
+                        {{ form.year }}
+
+                        {% if form.year.errors %}
+                            <div class="text-danger small">
+                                {{ form.year.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Photo -->
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label fw-bold">
+                            Student Photo
+                        </label>
+
+                        {% if form.instance.photo %}
+                            <div class="mb-3">
+
+                                <p class="text-muted mb-2">
+                                    Current Photo:
+                                </p>
+
+                                <img src="{{ form.instance.photo.url }}"
+                                     id="currentPhoto"
+                                     class="rounded shadow-sm"
+                                     style="width:120px;
+                                            height:120px;
+                                            object-fit:cover;">
+
+                            </div>
+                        {% endif %}
+
+
+                        {{ form.photo }}
+
+                        {% if form.photo.errors %}
+                            <div class="text-danger small">
+                                {{ form.photo.errors }}
+                            </div>
+                        {% endif %}
+
+                        <small class="text-muted">
+                            Select a new JPG, JPEG or PNG image
+                            to replace the current photo.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- New Photo Preview -->
+
+                <div class="mt-3" id="previewContainer"
+                     style="display:none;">
+
+                    <p class="fw-bold">
+                        New Photo Preview:
+                    </p>
+
+                    <img id="photoPreview"
+                         src="#"
+                         class="rounded shadow"
+                         style="width:150px;
+                                height:150px;
+                                object-fit:cover;">
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="mt-4">
+
+                    <button type="submit"
+                            class="btn btn-success px-4">
+
+                        <i class="bi bi-check-circle"></i>
+                        Update Student
+
+                    </button>
+
+
+                    <a href="{% url 'student_list' %}"
+                       class="btn btn-secondary px-4">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Cancel
+
+                    </a>
+
+                </div>
 
             </form>
 
@@ -33,5 +261,58 @@
     </div>
 
 </div>
+
+
+<!-- Photo Preview JavaScript -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const photoInput = document.querySelector(
+        'input[name="photo"]'
+    );
+
+    const previewContainer =
+        document.getElementById("previewContainer");
+
+    const photoPreview =
+        document.getElementById("photoPreview");
+
+
+    if (photoInput) {
+
+        photoInput.addEventListener("change", function () {
+
+            const file = this.files[0];
+
+            if (file) {
+
+                const reader = new FileReader();
+
+                reader.onload = function (event) {
+
+                    photoPreview.src =
+                        event.target.result;
+
+                    previewContainer.style.display =
+                        "block";
+                };
+
+                reader.readAsDataURL(file);
+
+            } else {
+
+                previewContainer.style.display =
+                    "none";
+            }
+
+        });
+
+    }
+
+});
+
+</script>
 
 {% endblock %}

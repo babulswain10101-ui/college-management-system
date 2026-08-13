@@ -206,15 +206,17 @@
                                 <img
                                     src="{{ student.photo.url }}"
                                     class="student-photo"
-                                    alt="Student Photo"
-                                >
+                                    alt="{{ Student.first_name }}"
+                                    width="60"
+                                    height="60"
+                                    style="object-fit: cover; border-radius: 50%;">
 
                             {% else %}
 
-                                <span class="text-muted">
+                                <span>
                                     No Photo
                                 </span>
-
+                                
                             {% endif %}
 
                         </td>
