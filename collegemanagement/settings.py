@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-t_z91h)ww6@$%f37i5=b2(wrc3m1vd%k(q7t%%&++*8^lnjt0a"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = false
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "college-management-system-1-bo4r.onrender.com",
